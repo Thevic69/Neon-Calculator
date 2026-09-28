@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Elegante</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+    <div class="fundo-decorativo" aria-hidden="true"></div>
+
+    <div class="aplicativo">
+
+        <!-- ===================== CABEÇALHO ===================== -->
+        <header class="cabecalho">
+            <div class="marca">
+                <span class="marca-icone" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <line x1="12" y1="12" x2="16" y2="8"></line>
+                        <line x1="12" y1="7" x2="12" y2="8.5"></line>
+                        <line x1="7" y1="12" x2="8.5" y2="12"></line>
+                        <line x1="17" y1="12" x2="15.5" y2="12"></line>
+                    </svg>
+                </span>
+                <div>
+                    <h1 class="marca-titulo">Calculadora <span>Neon</span></h1>
+                    <p class="marca-subtitulo">Painel de cálculo inteligente</p>
+                </div>
+            </div>
+
+            <div class="controles-cabecalho">
+                <div class="seletor-de-tema" role="group" aria-label="Cor do tema">
+                    <button type="button" class="tema-opcao tema-verde" data-tema="verde" title="Verde" aria-label="Tema verde"></button>
+                    <button type="button" class="tema-opcao tema-vermelho" data-tema="vermelho" title="Vermelho" aria-label="Tema vermelho"></button>
+                    <button type="button" class="tema-opcao tema-preto" data-tema="preto" title="Preto" aria-label="Tema preto"></button>
+                    <button type="button" class="tema-opcao tema-azul tema-ativo" data-tema="azul" title="Azul" aria-label="Tema azul"></button>
+                </div>
+
+                <div class="alternador-modo" role="tablist" aria-label="Modo da calculadora">
+                    <button type="button" class="alternador-opcao alternador-ativo" data-modo="basico" role="tab" aria-selected="true">Básico</button>
+                    <button type="button" class="alternador-opcao" data-modo="avancado" role="tab" aria-selected="false">Avançado</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+        <main class="layout-principal">
+
+            <!-- CARTÃO DA CALCULADORA -->
+            <section class="cartao cartao-calculadora" aria-label="Calculadora">
+                <div class="visor">
+                    <p class="visor-expressao" id="visor-expressao">&nbsp;</p>
+                    <p class="visor-previa" id="visor-previa">0</p>
+                </div>
+
+                <!-- Grade de botões do modo avançado (científico) -->
+                <div class="grade-botoes grade-avancada" id="grade-botoes-avancado">
+                    <button type="button" class="botao botao-funcao" data-acao="abrirParenteses">(</button>
+                    <button type="button" class="botao botao-funcao" data-acao="fecharParenteses">)</button>
+                    <button type="button" class="botao botao-funcao" data-acao="constante" data-valor="π">π</button>
+                    <button type="button" class="botao botao-funcao" data-acao="constante" data-valor="e">e</button>
+
+                    <button type="button" class="botao botao-funcao" data-acao="quadrado">x²</button>
+                    <button type="button" class="botao botao-funcao" data-acao="operador" data-valor="^">xʸ</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="√(">√</button>
+                    <button type="button" class="botao botao-funcao" data-acao="fatorial">n!</button>
+
+                    <button type="button" class="botao botao-funcao" data-acao="inverso">1/x</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="sen(">sen</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="cos(">cos</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="tan(">tan</button>
+
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="log(">log</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="ln(">ln</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="10^(">10ˣ</button>
+                    <button type="button" class="botao botao-funcao" data-acao="funcao" data-valor="e^(">eˣ</button>
+                </div>
+
+                <!-- Grade de botões do modo básico -->
+                <div class="grade-botoes grade-basica">
+                    <button type="button" class="botao botao-secundario" data-acao="limpar">AC</button>
+                    <button type="button" class="botao botao-secundario" data-acao="apagar" aria-label="Apagar último caractere">⌫</button>
+                    <button type="button" class="botao botao-secundario" data-acao="porcentagem">%</button>
+                    <button type="button" class="botao botao-operador" data-acao="operador" data-valor="/">÷</button>
+
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="7">7</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="8">8</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="9">9</button>
+                    <button type="button" class="botao botao-operador" data-acao="operador" data-valor="*">×</button>
+
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="4">4</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="5">5</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="6">6</button>
+                    <button type="button" class="botao botao-operador" data-acao="operador" data-valor="-">−</button>
+
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="1">1</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="2">2</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="3">3</button>
+                    <button type="button" class="botao botao-operador" data-acao="operador" data-valor="+">+</button>
+
+                    <button type="button" class="botao botao-secundario" data-acao="trocarSinal">±</button>
+                    <button type="button" class="botao botao-numero" data-acao="numero" data-valor="0">0</button>
+                    <button type="button" class="botao botao-numero" data-acao="ponto">.</button>
+                    <button type="button" class="botao botao-igual" data-acao="igual">=</button>
+                </div>
+            </section>
+
+            <!-- COLUNA LATERAL: HISTÓRICO E GLOSSÁRIO -->
+            <aside class="coluna-lateral">
+
+                <section class="cartao cartao-historico" aria-label="Histórico de cálculos">
+                    <div class="cartao-cabecalho">
+                        <h2>Histórico</h2>
+                        <button type="button" id="botao-limpar-historico" class="botao-icone" title="Limpar histórico" aria-label="Limpar histórico">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="4 7 6 7 20 7"></polyline>
+                                <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                                <path d="M19 7l-1 13a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="lista-historico" id="lista-historico">
+                        <li class="historico-vazio">Nenhum cálculo ainda</li>
+                    </ul>
+                </section>
+
+                <details class="cartao cartao-glossario">
+                    <summary>O que significa cada sinal?</summary>
+                    <ul class="lista-glossario" id="lista-glossario"></ul>
+                </details>
+
+            </aside>
+
+        </main>
+
+        <footer class="rodape">
+            <p>Desenvolvido com HTML, CSS e JavaScript puro — sem frameworks ou dependências.</p>
+        </footer>
+
+    </div>
+
+    <script src="js/motor-calculo.js"></script>
+    <script src="js/interface.js"></script>
+</body>
+</html>

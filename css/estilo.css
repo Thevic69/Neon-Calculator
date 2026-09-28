@@ -1,0 +1,611 @@
+/* =========================================================
+   VARIÁVEIS GLOBAIS
+   ========================================================= */
+:root {
+    --gradiente-fundo: linear-gradient(150deg, #05061a 0%, #0e0b2e 45%, #1c0f38 100%);
+
+    --cor-cartao: rgba(255, 255, 255, 0.045);
+    --cor-borda-cartao: rgba(96, 165, 250, 0.18);
+    --cor-borda-cartao-forte: rgba(96, 165, 250, 0.35);
+
+    --cor-texto-principal: #f2eefc;
+    --cor-texto-secundario: #9c93c2;
+    --cor-texto-apagado: #6c6592;
+
+    /* Cores de tema: alteradas dinamicamente pelo seletor de cores (ver interface.js) */
+    --cor-tema-inicio: #3b82f6;
+    --cor-tema-fim: #22d3ee;
+    --gradiente-tema: linear-gradient(135deg, var(--cor-tema-inicio) 0%, var(--cor-tema-fim) 100%);
+    --cor-texto-sobre-tema: #0d1224;
+    --cor-tema-fundo-suave: rgba(59, 130, 246, 0.1);
+    --cor-tema-fundo-suave-forte: rgba(59, 130, 246, 0.18);
+
+    --cor-erro: #ff6b6b;
+
+    --raio-borda-grande: 28px;
+    --raio-borda-media: 18px;
+    --raio-borda-pequena: 12px;
+
+    --sombra-cartao: 0 20px 60px rgba(5, 3, 20, 0.55);
+    --brilho-tema: 0 0 20px rgba(59, 130, 246, 0.32);
+    --brilho-tema-forte: 0 0 32px rgba(59, 130, 246, 0.5);
+
+    --fonte-titulo: "Orbitron", "Inter", sans-serif;
+    --fonte-texto: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =========================================================
+   RESET E BASE
+   ========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--gradiente-fundo);
+    background-attachment: fixed;
+    color: var(--cor-texto-principal);
+    font-family: var(--fonte-texto);
+    padding: 32px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Brilhos ambientes decorativos ao fundo, remetendo a luzes de painel */
+.fundo-decorativo {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.fundo-decorativo::before,
+.fundo-decorativo::after {
+    content: "";
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.28;
+}
+
+.fundo-decorativo::before {
+    top: -120px;
+    left: -100px;
+    background: var(--cor-tema-inicio);
+}
+
+.fundo-decorativo::after {
+    bottom: -140px;
+    right: -100px;
+    background: var(--cor-tema-fim);
+}
+
+/* =========================================================
+   ESTRUTURA GERAL DA APLICAÇÃO
+   ========================================================= */
+.aplicativo {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.controles-cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+/* Seletor de cores do tema */
+.seletor-de-tema {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tema-opcao {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tema-opcao:hover {
+    transform: scale(1.15);
+}
+
+.tema-opcao.tema-ativo {
+    border-color: var(--cor-texto-principal);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.tema-verde {
+    background: linear-gradient(135deg, #16a34a 0%, #4ade80 100%);
+}
+
+.tema-vermelho {
+    background: linear-gradient(135deg, #dc2626 0%, #f87171 100%);
+}
+
+.tema-preto {
+    background: linear-gradient(135deg, #2b2b30 0%, #57575f 100%);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tema-azul {
+    background: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.marca-icone {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--raio-borda-pequena);
+    background: var(--cor-cartao);
+    border: 1px solid var(--cor-borda-cartao);
+    color: var(--cor-tema-inicio);
+}
+
+.marca-icone svg {
+    width: 24px;
+    height: 24px;
+}
+
+.marca-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.marca-titulo span {
+    background: var(--gradiente-tema);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.marca-subtitulo {
+    font-size: 12.5px;
+    color: var(--cor-texto-secundario);
+    margin-top: 2px;
+}
+
+/* Alternador de modo (Básico / Avançado), estilo painel automotivo */
+.alternador-modo {
+    display: flex;
+    padding: 4px;
+    background: var(--cor-cartao);
+    border: 1px solid var(--cor-borda-cartao);
+    border-radius: 999px;
+}
+
+.alternador-opcao {
+    border: none;
+    background: transparent;
+    color: var(--cor-texto-secundario);
+    font-family: var(--fonte-texto);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.alternador-opcao.alternador-ativo {
+    background: var(--gradiente-tema);
+    color: var(--cor-texto-sobre-tema);
+    box-shadow: var(--brilho-tema);
+}
+
+/* =========================================================
+   LAYOUT PRINCIPAL (GRADE)
+   ========================================================= */
+.layout-principal {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* =========================================================
+   CARTÕES (BASE COMPARTILHADA)
+   ========================================================= */
+.cartao {
+    background: var(--cor-cartao);
+    border: 1px solid var(--cor-borda-cartao);
+    border-radius: var(--raio-borda-grande);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: var(--sombra-cartao);
+    padding: 26px;
+}
+
+/* =========================================================
+   VISOR DA CALCULADORA
+   ========================================================= */
+.visor {
+    text-align: right;
+    padding: 10px 6px 22px;
+    border-bottom: 1px solid var(--cor-borda-cartao);
+    margin-bottom: 20px;
+    min-height: 92px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.visor-expressao {
+    font-size: 15px;
+    color: var(--cor-texto-secundario);
+    min-height: 18px;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.visor-previa {
+    font-family: var(--fonte-titulo);
+    font-size: 42px;
+    font-weight: 700;
+    background: var(--gradiente-tema);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+    overflow-x: auto;
+    transition: opacity 0.15s ease;
+}
+
+.visor-previa-erro {
+    font-size: 18px;
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: var(--cor-erro);
+}
+
+/* =========================================================
+   GRADE DE BOTÕES
+   ========================================================= */
+.grade-botoes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.grade-avancada {
+    display: none;
+    margin-bottom: 14px;
+}
+
+.grade-avancada.grade-visivel {
+    display: grid;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+.botao {
+    height: 58px;
+    border: none;
+    border-radius: var(--raio-borda-media);
+    font-family: var(--fonte-texto);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.botao:active {
+    transform: scale(0.95);
+}
+
+.botao-numero {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.botao-numero:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.botao-secundario {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--cor-borda-cartao);
+    color: var(--cor-texto-secundario);
+    font-size: 15px;
+}
+
+.botao-secundario:hover {
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-borda-cartao-forte);
+}
+
+.botao-funcao {
+    background: var(--cor-tema-fundo-suave);
+    border: 1px solid var(--cor-borda-cartao);
+    color: var(--cor-tema-inicio);
+    font-size: 14.5px;
+}
+
+.botao-funcao:hover {
+    background: var(--cor-tema-fundo-suave-forte);
+    box-shadow: var(--brilho-tema);
+}
+
+.botao-operador {
+    background: var(--gradiente-tema);
+    color: var(--cor-texto-sobre-tema);
+    box-shadow: var(--brilho-tema);
+}
+
+.botao-operador:hover {
+    box-shadow: var(--brilho-tema-forte);
+}
+
+.botao-igual {
+    background: var(--gradiente-tema);
+    color: var(--cor-texto-sobre-tema);
+    font-size: 20px;
+    box-shadow: var(--brilho-tema-forte);
+}
+
+.botao-igual:hover {
+    box-shadow: var(--brilho-tema-forte), 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   COLUNA LATERAL (HISTÓRICO E GLOSSÁRIO)
+   ========================================================= */
+.coluna-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.cartao-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.cartao-cabecalho h2 {
+    font-family: var(--fonte-titulo);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    color: var(--cor-texto-principal);
+}
+
+.botao-icone {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--cor-borda-cartao);
+    border-radius: 10px;
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.botao-icone svg {
+    width: 17px;
+    height: 17px;
+}
+
+.botao-icone:hover {
+    color: var(--cor-erro);
+    border-color: var(--cor-erro);
+}
+
+/* =========================================================
+   LISTA DE HISTÓRICO
+   ========================================================= */
+.lista-historico {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.historico-vazio {
+    color: var(--cor-texto-apagado);
+    font-size: 13.5px;
+    text-align: center;
+    padding: 18px 0;
+}
+
+.historico-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: var(--raio-borda-pequena);
+    background: rgba(255, 255, 255, 0.03);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.historico-item:hover {
+    background: var(--cor-tema-fundo-suave);
+}
+
+.historico-expressao {
+    font-size: 12.5px;
+    color: var(--cor-texto-secundario);
+}
+
+.historico-resultado {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+
+/* =========================================================
+   GLOSSÁRIO EDUCATIVO
+   ========================================================= */
+.cartao-glossario summary {
+    font-family: var(--fonte-titulo);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cartao-glossario summary::-webkit-details-marker {
+    display: none;
+}
+
+.cartao-glossario summary::after {
+    content: "+";
+    font-size: 20px;
+    color: var(--cor-tema-inicio);
+    transition: transform 0.2s ease;
+}
+
+.cartao-glossario[open] summary::after {
+    transform: rotate(45deg);
+}
+
+.lista-glossario {
+    list-style: none;
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.glossario-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.glossario-simbolo {
+    flex-shrink: 0;
+    min-width: 44px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: var(--cor-tema-fundo-suave);
+    border: 1px solid var(--cor-borda-cartao);
+    color: var(--cor-tema-inicio);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.glossario-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 13px;
+    color: var(--cor-texto-secundario);
+    line-height: 1.5;
+}
+
+.glossario-texto strong {
+    color: var(--cor-texto-principal);
+    font-size: 13.5px;
+}
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+.rodape {
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--cor-texto-apagado);
+    padding-top: 4px;
+}
+
+/* =========================================================
+   BARRA DE ROLAGEM PERSONALIZADA
+   ========================================================= */
+.lista-historico::-webkit-scrollbar,
+.lista-glossario::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lista-historico::-webkit-scrollbar-thumb,
+.lista-glossario::-webkit-scrollbar-thumb {
+    background: var(--cor-borda-cartao-forte);
+    border-radius: 10px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 860px) {
+    .layout-principal {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .cartao {
+        padding: 20px;
+        border-radius: var(--raio-borda-media);
+    }
+
+    .visor-previa {
+        font-size: 34px;
+    }
+
+    .botao {
+        height: 50px;
+        font-size: 15px;
+    }
+
+    .marca-titulo {
+        font-size: 18px;
+    }
+}
