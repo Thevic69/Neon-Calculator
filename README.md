@@ -1,4 +1,4 @@
-# Calculadora Elegante
+# Calculadora Neon
 
 Calculadora web com interface inspirada em painéis automotivos futuristas, desenvolvida com HTML, CSS e JavaScript puro, sem frameworks ou bibliotecas externas. Além de calcular, o projeto ensina o significado de cada sinal matemático, oferece um modo avançado com funções científicas, prévia de resultado em tempo real, seletor de cores de tema e histórico persistente de cálculos.
 
